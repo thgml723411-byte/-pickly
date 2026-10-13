@@ -1,5 +1,5 @@
 import React, {useEffect,useState} from 'react'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, useLocation } from 'react-router-dom'
 import { Navigate } from 'react-router-dom'
 
 import { observeAuthState } from '../firebase/auth'
@@ -16,6 +16,7 @@ import NotFound from '../pages/NotFound.jsx'
 import Loading from '../components/Loading.jsx'
 
 const Router = () => {
+  const location = useLocation()
   const [user,setUser] = useState(null)
   const [isAuthLoding,setIsAuthLoding] = useState(true)
 
@@ -45,12 +46,12 @@ const Router = () => {
         />
           <Route path='/login' 
           element={
-            user ? <Navigate to='/mypage' replace/> : <Login/>
+            user ? <Navigate to={location.state?.from || '/mypage'} replace/> : <Login/>
           }
           />
           <Route path='/signup'
           element={
-            user ? <Navigate to='/mypage' replace/> : <SignUp/>
+            user ? <Navigate to={location.state?.from || '/mypage'} replace/> : <SignUp/>
           }
           />
           <Route path='/mypage' 

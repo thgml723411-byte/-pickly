@@ -12,6 +12,7 @@
 }
 
 .eyebrow {
+  font-family: var(--font-mono);
   font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.14em;
@@ -35,17 +36,21 @@
 }
 
 .form {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 20px;
   width: 100%;
   max-width: 420px;
   padding: 40px 36px 44px;
-  background: var(--color-bg);
+  background-color: var(--color-paper);
+  background-image: var(--texture-paper);
   border: 1px solid var(--color-border);
-  border-radius: 6px;
-  box-shadow: 0 18px 40px rgba(35, 24, 21, 0.08);
+  border-radius: 0;
+  box-shadow: 6px 7px 0 var(--color-chalk), 7px 8px 0 var(--color-border);
 }
+
+.form::before { content: ''; position: absolute; width: 75px; height: 25px; top: -13px; left: calc(50% - 37px); background: rgba(159, 150, 121, 0.45); transform: rotate(-5deg); }
 
 .field {
   display: flex;
@@ -76,17 +81,17 @@
 
 .error {
   font-size: 0.85rem;
-  color: #b3261e;
+  color: var(--color-primary);
 }
 
 .confirmOk {
   font-size: 0.85rem;
-  color: #2e7d32;
+  color: var(--color-secondary-dark);
 }
 
 .submit {
   background: var(--color-primary);
-  color: var(--color-surface);
+  color: var(--color-on-primary);
   font-weight: 600;
   letter-spacing: 0.02em;
   padding: 15px 24px;
@@ -111,3 +116,6 @@
     padding: 32px 24px 36px;
   }
 }
+
+.loginLink { margin-top: 24px; font-size: 0.8rem; color: var(--color-text-muted); text-align: center; }
+.loginLink a { margin-left: 8px; color: var(--color-primary); text-decoration: underline; text-underline-offset: 4px; }

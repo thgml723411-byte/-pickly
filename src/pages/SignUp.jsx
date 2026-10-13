@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { Link,useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { Helmet } from 'react-helmet-async'
 import { signUp } from '../firebase/auth.js'
 import { saveUser } from '../firebase/firestore.js'
 import styles from './signUp.module.scss'
@@ -13,6 +14,7 @@ const SignUp = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [confirmMessage, setconfirmMessage] = useState('')
   const navigate = useNavigate()
+  const location = useLocation()
 
   const fncpass = (e) => {
     const confirmValue = e.target.value
@@ -49,7 +51,7 @@ const SignUp = () => {
      try{
        const user = await signUp(email,password)//회원가입
        await saveUser (user.uid,{nicname,email:user.email})//user의 정보를 가지고 저장
-       navigate('/')
+       navigate(location.state?.from || '/')
      }catch(err){
         if(err.code === 'auth/email-already-in-use'){
           setErrmessage('이미 가입된 이메일 입니다')
@@ -67,11 +69,12 @@ const SignUp = () => {
 
   return (
     <main className={styles.signUp}>
+      <Helmet><title>회원가입 | Pickly</title></Helmet>
 
       <section className={styles.intro}>
         <p className={styles.eyebrow}>sign up</p>
-        <h2 className={styles.title}>회원 가입</h2>
-        <p className={styles.text}>가입하셔서 나에게 맞는 콘텐츠를 찾아보세요</p>
+        <h1 className={styles.title}>나의 취향, 시작하기</h1>
+        <p className={styles.text}>Pickly와 함께 오늘의 기분에 어울리는 이야기를 찾아요.</p>
       </section>
 
       <form className={styles.form} onSubmit={fncSub}>
@@ -110,6 +113,8 @@ const SignUp = () => {
         }
 
       </form>
+
+      <p className={styles.loginLink}>이미 계정이 있나요? <Link to='/login' state={location.state}>로그인</Link></p>
 
     </main>
   )

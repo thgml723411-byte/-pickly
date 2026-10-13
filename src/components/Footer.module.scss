@@ -1,9 +1,7 @@
-.footer {
-  background: var(--color-text);
-  border-top: 1px solid rgba(245, 239, 198, 0.12);
-  padding: 28px 20px;
-  text-align: center;
-  color: rgba(245, 239, 198, 0.55);
-  font-size: 0.8rem;
-  letter-spacing: 0.02em;
-}
+.footer { background-color: var(--color-film); background-image: var(--texture-paper); color: var(--color-chalk); padding: 38px 32px; }
+.inner { max-width: 1116px; margin: auto; display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; }
+.logo { display: inline-flex; gap: 5px; align-items: flex-start; font-family: var(--font-serif); font-size: 1.8rem; font-weight: 700; letter-spacing: -0.07em; }
+.logo span { color: var(--color-green); font-family: var(--font-sans); font-size: 1.15rem; }
+.inner > div > p:last-child { font-size: 0.72rem; margin-top: 10px; }
+.inner > p { font-family: var(--font-mono); font-size: 0.6rem; }
+@media (max-width: 640px) { .footer { padding: 30px 22px; } .inner { align-items: flex-start; flex-direction: column; } }

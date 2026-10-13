@@ -1,26 +1,38 @@
 :root {
-  --color-bg: #fbf7ed;
-  --color-surface: #f5efc6;
-  --color-text: #231815;
-  --color-text-muted: #6b5248;
-  --color-primary: #4d0e12;
-  --color-primary-dark: #350a0d;
-  --color-secondary: #a5bcd6;
-  --color-secondary-dark: #82a0bf;
-  --color-soil: #4a2e27;
-  --color-border: #e4dcc7;
-  --max-width: 1080px;
+  --color-amaranth: #933b5b;
+  --color-pink: #b5728a;
+  --color-green: #aabaae;
+  --color-chalk: #e3d6bf;
+  --color-olive: #9f9679;
+  --color-primary: var(--color-amaranth);
+  --color-secondary: var(--color-pink);
+  --color-bg: #f6f1e8;
+  --color-surface: var(--color-chalk);
+  --color-text: #2b1620;
+  --color-text-muted: #725761;
+  --color-primary-dark: #783049;
+  --color-on-primary: #fff9ee;
+  --color-secondary-dark: #783049;
+  --color-border: #d0c3ad;
+  --color-record-groove: #67424f;
+  --color-film: #211e1c;
+  --color-paper: #fff9ee;
+  --color-clip: #b4a579;
+  --color-shadow: 43, 22, 32;
+  --texture-paper: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Cpath fill='%23000' opacity='.045' filter='url(%23n)' d='M0 0h180v180H0z'/%3E%3C/svg%3E");
+  --max-width: 1180px;
+  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Malgun Gothic', sans-serif;
   --font-serif: Georgia, 'Nanum Myeongjo', 'Times New Roman', serif;
+  --font-mono: 'Courier New', 'Malgun Gothic', monospace;
 }
 
-html,
-body,
-#root {
-  min-height: 100%;
-}
-
-body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  color: var(--color-text);
-  background: var(--color-bg);
-}
+html, body, #root { min-height: 100%; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--font-sans); color: var(--color-text); background-color: var(--color-bg); background-image: var(--texture-paper); word-break: keep-all; overflow-wrap: break-word; }
+#root { min-height: 100vh; display: flex; flex-direction: column; }
+main { flex: 1; }
+input, select, textarea { font: inherit; }
+button:disabled { cursor: not-allowed; }
+:focus-visible { outline: 3px solid var(--color-secondary-dark); outline-offset: 4px; }
+::selection { background: var(--color-green); color: var(--color-text); }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }

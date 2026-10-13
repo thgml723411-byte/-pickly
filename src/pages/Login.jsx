@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Helmet } from 'react-helmet-async'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { login } from '../firebase/auth.js'
 import styles from './Login.module.scss'
 
@@ -10,6 +10,7 @@ const Login = () => {
   const [errMessage, setErrMessage] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const navigate = useNavigate()
+  const location = useLocation()
 
   const funSubmit = async (e) => {
     e.preventDefault()
@@ -18,7 +19,7 @@ const Login = () => {
 
     try {
       await login(email, password)
-      navigate('/mypage')
+      navigate(location.state?.from || '/mypage', { replace: true })
     } catch (err) {
       if (err.code === 'auth/invalid-email') {
         setErrMessage('올바른 이메일 형식을 입력해 주세요.')
@@ -38,8 +39,8 @@ const Login = () => {
 
     <Helmet>
        <html lang='ko'/>
-       <title>로그인 | miq</title>
-       <meta name='description' content='미큐에 로그인하고 나만의 콘텐츠 추천을 확인하세요'/>
+       <title>로그인 | Pickly</title>
+       <meta name='description' content='Pickly에 로그인하고 오늘의 기분에 맞는 콘텐츠를 발견하세요.'/>
     </Helmet>
 
     <main className={styles.login}>
@@ -47,7 +48,7 @@ const Login = () => {
       <section className={styles.intro}>
         <p className={styles.eyebrow}>login</p>
         <h1 className={styles.title}>로그인</h1>
-        <p className={styles.text}>다시 만나서 반가워요, 취향 추천을 이어가 볼까요</p>
+        <p className={styles.text}>{location.state?.from ? '고른 무드는 기억하고 있어요. 로그인하고 오늘의 Pick을 만나보세요.' : '다시 만나서 반가워요. 오늘은 어떤 기분인가요?'}</p>
       </section>
 
       <form className={styles.form} onSubmit={funSubmit}>
@@ -58,7 +59,7 @@ const Login = () => {
 
         <div className={styles.field}>
           <label htmlFor='password'>비밀번호</label>
-          <input id='password' type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="비밀번호를 입력하세요" />
+          <input id='password' type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="비밀번호를 입력하세요" required />
         </div>
 
 
@@ -72,9 +73,9 @@ const Login = () => {
 
       </form>
 
-    </main>
+    <p className={styles.signupLink}>아직 회원이 아니신가요? <Link to='/signup' state={location.state}>회원가입</Link></p>
 
-    <p>아직 회원이 아니신가요? {''} <Link to='/signup'>회원가입</Link></p>
+    </main>
 
     </>
   )

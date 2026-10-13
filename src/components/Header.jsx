@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { logout } from '../firebase/auth'
 import { observeuser } from '../firebase/firestore'
 import styles from './Header.module.scss'
@@ -44,24 +44,24 @@ const Header = ({ user }) => { //프롭스 설정
   return (
     <header className={styles.header}>
       <div className={styles.inner}>
-        <Link to='/' className={styles.logo}>MIQ</Link>
+        <Link to='/' className={styles.logo} aria-label='Pickly 홈'>pickly<span aria-hidden='true'>✳</span></Link>
 
-        <nav className={styles.nav}>
-          <Link to='/'>홈</Link>
-          <Link to='/recommend'>AI 추천</Link>
+        <nav className={styles.nav} aria-label='주 메뉴'>
+          <NavLink to='/' end className={({ isActive }) => isActive ? styles.active : styles.link}>오늘의 무드</NavLink>
+          <NavLink to='/recommend' className={({ isActive }) => isActive ? styles.active : styles.link}>콘텐츠 찾기</NavLink>
           {
             user ? (
               <>
                 <span>{nickname ? `${nickname}님` : '사용자님'}</span>
-                <Link to='/mypage'>마이페이지</Link>
+                <NavLink to='/mypage' className={({ isActive }) => isActive ? styles.active : styles.link}>마이페이지</NavLink>
                 <button onClick={fnclogout} disabled={isLoggin}>
                   {isLoggin ? '로그아웃중' : '로그아웃'}
                 </button>
               </>
             ) : (
               <>
-                <Link to='/login'>로그인</Link>
-                <Link to='/signup'>회원가입</Link>
+                <NavLink to='/login' className={({ isActive }) => isActive ? styles.active : styles.link}>로그인</NavLink>
+                <Link to='/signup' className={styles.join}>시작하기</Link>
               </>
             )
           }
