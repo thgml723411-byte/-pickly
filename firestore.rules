@@ -1,0 +1,48 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    match /users/{userId} {
+      function isValidUser(data) {
+        return data.keys().hasOnly(['nicname', 'email', 'updatedAt'])
+          && data.nicname is string && data.nicname.size() <= 40
+          && data.email is string && data.email == request.auth.token.email
+          && data.updatedAt == request.time;
+      }
+
+      allow read: if isOwner(userId);
+      allow create, update: if isOwner(userId) && isValidUser(request.resource.data);
+      allow delete: if isOwner(userId);
+    }
+
+    match /recommendations/{recommendationId} {
+      function isValidRecommendation(data) {
+        return data.userId is string
+          && data.userId == request.auth.uid
+          && data.createdAt == request.time;
+      }
+
+      function isValidRecommendationResultUpdate(data) {
+        return data.userId == resource.data.userId
+          && data.createdAt == resource.data.createdAt
+          && data.status == 'completed'
+          && data.updatedAt == request.time;
+      }
+
+      // list queries must filter by userId == request.auth.uid for this rule to be satisfiable
+      allow read: if isSignedIn() && resource.data.userId == request.auth.uid;
+      allow create: if isSignedIn() && isValidRecommendation(request.resource.data);
+      allow update: if isSignedIn() && resource.data.userId == request.auth.uid
+        && isValidRecommendationResultUpdate(request.resource.data);
+      allow delete: if isSignedIn() && resource.data.userId == request.auth.uid;
+    }
+  }
+}

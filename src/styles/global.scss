@@ -1,0 +1,26 @@
+:root {
+  --color-bg: #fbf7ed;
+  --color-surface: #f5efc6;
+  --color-text: #231815;
+  --color-text-muted: #6b5248;
+  --color-primary: #4d0e12;
+  --color-primary-dark: #350a0d;
+  --color-secondary: #a5bcd6;
+  --color-secondary-dark: #82a0bf;
+  --color-soil: #4a2e27;
+  --color-border: #e4dcc7;
+  --max-width: 1080px;
+  --font-serif: Georgia, 'Nanum Myeongjo', 'Times New Roman', serif;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: var(--color-text);
+  background: var(--color-bg);
+}
